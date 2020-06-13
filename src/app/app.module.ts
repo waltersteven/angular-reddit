@@ -15,13 +15,21 @@ import { ToastrModule } from 'ngx-toastr';
 import { TokenInterceptor } from './token-interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
+import { PostTileComponent } from './shared/post-tile/post-tile.component';
+import { VoteButtonComponent } from './shared/vote-button/vote-button.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { SubredditSidebarComponent } from './shared/subreddit-sidebar/subreddit-sidebar.component';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SignupComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    PostTileComponent,
+    VoteButtonComponent,
+    SidebarComponent,
+    SubredditSidebarComponent
   ],
   imports: [
     BrowserModule,
