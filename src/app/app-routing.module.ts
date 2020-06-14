@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { CreateSubredditComponent } from './subreddit/create-subreddit/create-subreddit.component';
 import { CreatePostComponent } from './post/create-post/create-post.component';
 import { ListSubredditComponent } from './subreddit/list-subreddit/list-subreddit.component';
+import { ViewPostComponent } from './post/view-post/view-post.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'create-subreddit', component: CreateSubredditComponent },
   { path: 'create-post', component: CreatePostComponent },
-  { path: 'list-subreddits', component: ListSubredditComponent }
+  { path: 'list-subreddits', component: ListSubredditComponent },
+  { path: 'view-post/:id', component: ViewPostComponent },
 ];
 
 @NgModule({
