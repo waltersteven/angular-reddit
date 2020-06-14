@@ -22,6 +22,7 @@ import { SubredditSidebarComponent } from './shared/subreddit-sidebar/subreddit-
 import { CreateSubredditComponent } from './subreddit/create-subreddit/create-subreddit.component';
 import { CreatePostComponent } from './post/create-post/create-post.component';
 import { ListSubredditComponent } from './subreddit/list-subreddit/list-subreddit.component';
+import { EditorModule } from "@tinymce/tinymce-angular";
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { ListSubredditComponent } from './subreddit/list-subreddit/list-subreddi
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     FontAwesomeModule,
+    EditorModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
