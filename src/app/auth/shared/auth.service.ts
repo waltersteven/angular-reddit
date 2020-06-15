@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SignupRequestPayload } from '../signup/signup-request.payload';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { LoginRequestPayload } from '../login/login-request.payload';
 import { LoginResponse } from '../login/login-response.payload';
 import { LocalStorageService } from 'ngx-webstorage';
@@ -11,6 +11,14 @@ import { map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
+
+  @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
+  @Output() username: EventEmitter<string> = new EventEmitter();
+
+  refreshTokenPayload = {
+    refreshToken: this.getRefreshToken(),
+    username: this.getUserName()
+  }
 
   constructor(private httpClient: HttpClient,
     private localStorage: LocalStorageService) { }
@@ -28,17 +36,29 @@ export class AuthService {
         this.localStorage.store('refreshToken', data.refreshToken);
         this.localStorage.store('expiresAt', data.expiresAt);
 
+        this.loggedIn.emit(true);
+        this.username.emit(data.username);
         return true;
       }));
   }
 
-  refreshToken() {
-    const refreshTokenPayload = {
-      refreshToken: this.getRefreshToken(),
-      username: this.getUserName()
-    }
+  logout() {
+    this.httpClient.post('http://localhost:8080/api/auth/logout',
+      this.refreshTokenPayload, { responseType: 'text' })
+      .subscribe(data => {
+        console.log('data :>> ', data);
+      }, error => {
+        throwError(error);
+      });
 
-    return this.httpClient.post<LoginResponse>('http://localhost:8080/api/auth/refresh/token', refreshTokenPayload)
+    this.localStorage.clear('authenticationToken');
+    this.localStorage.clear('username');
+    this.localStorage.clear('refreshToken');
+    this.localStorage.clear('expiresAt');
+  }
+
+  refreshToken() {
+    return this.httpClient.post<LoginResponse>('http://localhost:8080/api/auth/refresh/token', this.refreshTokenPayload)
       .pipe(tap(response => {
         this.localStorage.store('authenticationToken', response.authenticationToken);
         this.localStorage.store('expiresAt', response.expiresAt);
