@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PostService } from '../post.service';
 import { PostModel } from '../post.model';
 import { faComments } from "@fortawesome/free-solid-svg-icons";
@@ -12,12 +12,9 @@ import { Router } from '@angular/router';
 export class PostTileComponent implements OnInit {
 
   faComments = faComments;
+  @Input() posts: PostModel[];
 
-  posts$: Array<PostModel>;
-
-  constructor(private router: Router, private postService: PostService) {
-    this.postService.getAllPosts().subscribe(posts => this.posts$ = posts);
-  }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
